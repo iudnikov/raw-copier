@@ -59,6 +59,11 @@ public class FileCopier {
             log.warn("source dir {} does not exists", dir);
             return;
         }
+
+        if (!target.toFile().exists()) {
+            log.debug("target would be created");
+            createDir(target.toFile());
+        }
         Files.walk(dir.toPath())
                 .filter(f -> Files.isRegularFile(f) && f.getFileName().toString().endsWith(".ARW"))
                 .forEach(f -> {
@@ -81,9 +86,9 @@ public class FileCopier {
                             if (!dateSubDir.exists()) {
                                 createDir(dateSubDir);
                             }
-                            final String targetFileName = String.format("%s_%s", data.cameraModel, currentFile.getName());
-                            final File toFile = dateSubDir.toPath().resolve(targetFileName).toFile();
-                            log.debug("toFile: {}", toFile);
+                            final String toFileName = getToFileName(currentFile, data);
+                            final File toFile = dateSubDir.toPath().resolve(toFileName).toFile();
+                            log.debug("copying to: {}", toFile);
                             if (!toFile.exists()) {
                                 FileUtils.copyFile(currentFile, toFile);
                             } else {
@@ -94,6 +99,16 @@ public class FileCopier {
                         log.error("can't copy file: {}", f, e);
                     }
                 });
+    }
+
+    private String getToFileName(File currentFile, FileData data) {
+        String toFileName = currentFile.getName();
+        if (currentFile.getName().contains("_") && currentFile.getName().startsWith(data.cameraModel)) {
+            String[] split = currentFile.getName().split("_");
+            toFileName = split[1];
+            log.debug("file would be renamed from {} to {}", currentFile.getName(), toFileName);
+        }
+        return toFileName;
     }
 
     private void createDir(File dirToCreate) throws Exception {
