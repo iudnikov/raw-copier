@@ -1,4 +1,4 @@
-package com.example;
+package ru.yudnikov;
 
 public class App {
     public static void main(String[] args) throws Exception {

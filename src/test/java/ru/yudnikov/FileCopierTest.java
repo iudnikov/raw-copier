@@ -1,4 +1,4 @@
-package com.example;
+package ru.yudnikov;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class FileCopierTest {
