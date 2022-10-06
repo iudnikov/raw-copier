@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Slf4j
-class FileCopierTest {
+class CopierTest {
 
-    static final String targetDir = "data/target";
+    static final String targetDir = "target/data";
     static final String sourceDir = "data/source/ILCE-6400/DCIM";
-    static final int days = 120;
+    static final int days = 3650;
 
     @BeforeAll
     static void cleanUp() throws IOException {
@@ -27,7 +28,7 @@ class FileCopierTest {
 
     @Test
     void testRun() throws Exception {
-        FileCopier copier = FileCopier.of(sourceDir, targetDir, days);
+        Copier copier = Copier.of(sourceDir, targetDir, days);
         copier.run();
     }
 

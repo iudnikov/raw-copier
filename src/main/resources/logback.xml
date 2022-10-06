@@ -9,7 +9,7 @@
     <logger name="com.example" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
